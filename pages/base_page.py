@@ -1,6 +1,6 @@
 import allure
 from selenium.webdriver.common.action_chains import ActionChains
-from locators.base_page import BasePageLocators
+from locators.base_locators import BasePageLocators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import ElementClickInterceptedException
@@ -28,7 +28,19 @@ class BasePage:
 
     @allure.step("Нажать на элемент {locator}")
     def click(self, locator):
-        WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(locator)).click()
+        def try_click(driver):
+            element = EC.element_to_be_clickable(locator)(driver)
+            if not element:
+                return False
+            try:
+                element.click()
+            except ElementClickInterceptedException:
+                return False
+            return True
+
+        WebDriverWait(self.driver, 15).until(
+            try_click, f"Не удалось нажать на элемент {locator}"
+        )
 
     @allure.step("Закрыть всплывающее окно")
     def dismiss_dialog(self):

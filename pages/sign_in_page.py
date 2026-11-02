@@ -1,5 +1,5 @@
 import allure
-from locators.sign_in_page import SignInPageLocators
+from locators.sign_in_locators import SignInPageLocators
 
 from pages.base_page import BasePage
 from routes import Routes

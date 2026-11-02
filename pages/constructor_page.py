@@ -1,5 +1,5 @@
 import allure
-from locators.constructor_page import ConstructorPageLocators
+from locators.constructor_locators import ConstructorPageLocators
 
 from ingredients import IngredientSamples
 from pages.base_page import BasePage
@@ -25,6 +25,18 @@ class ConstructorPage(BasePage):
     def show_ingredient_details(self, name):
         self.click(self.ingredient_card(name))
         return self.visible_element(ConstructorPageLocators.DETAILS_TITLE).text
+
+    def open_bun_details(self):
+        return self.show_ingredient_details(IngredientSamples.BUN)
+
+    def bun_quantity(self):
+        return self.ingredient_quantity(IngredientSamples.BUN)
+
+    def add_bun(self):
+        self.put_ingredient_in_burger(IngredientSamples.BUN)
+
+    def wait_for_bun_quantity(self, expected):
+        return self.wait_for_quantity(IngredientSamples.BUN, expected)
 
     def details_name(self):
         return self.visible_element(ConstructorPageLocators.DETAILS_NAME).text

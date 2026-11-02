@@ -1,5 +1,5 @@
 import allure
-from locators.order_feed_page import OrderFeedPageLocators
+from locators.order_feed_locators import OrderFeedPageLocators
 
 from pages.base_page import BasePage
 from routes import Routes

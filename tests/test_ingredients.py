@@ -10,14 +10,14 @@ class TestIngredients:
         page = ConstructorPage(driver)
         page.open()
 
-        assert page.show_ingredient_details(IngredientSamples.BUN) == "Детали ингредиента"
+        assert page.open_bun_details() == "Детали ингредиента"
         assert page.details_name() == IngredientSamples.BUN
 
     @allure.title('Закрытие окна с деталями ингредиента')
     def test_close_button_hides_details(self, driver):
         page = ConstructorPage(driver)
         page.open()
-        page.show_ingredient_details(IngredientSamples.BUN)
+        page.open_bun_details()
 
         page.dismiss_dialog()
 
@@ -27,9 +27,9 @@ class TestIngredients:
     def test_adding_bun_increases_quantity(self, driver):
         page = ConstructorPage(driver)
         page.open()
-        before = page.ingredient_quantity(IngredientSamples.BUN)
+        before = page.bun_quantity()
 
-        page.put_ingredient_in_burger(IngredientSamples.BUN)
+        page.add_bun()
 
-        assert page.wait_for_quantity(IngredientSamples.BUN, before + 2)
+        assert page.wait_for_bun_quantity(before + 2)
 
